@@ -1,0 +1,115 @@
+from tkinter import *
+from tkinter import messagebox
+import random
+
+FONT = ('verdana',12)
+CHOICES = ['rock','paper','scissor']
+BGCOLOR = '#DCDCDC'
+FGCOLOR = 'black'
+UserWins = 0
+ComputerWins = 0
+compChoice = random.choice(CHOICES)
+
+def showRules():
+    '''Shows games rules to the User.'''
+    messagebox.showinfo('Rules','Rock Beats Scissor,\nScissor Beats Paper\nand, Scissor beats Rock'.title())
+
+def showAbout():
+    '''shows 'About' menu'''
+    messagebox.showinfo('About','Game : Rock-Paper-Scissor Game\nBy : Nikhil Bhatt')
+
+def winner(user,comp):
+    '''Return The winner'''
+    global UserWins
+    global ComputerWins
+    winning_text = f"You: {user.title()}  |  Comp: {comp.title()}\n"
+    if user==comp:
+        return winning_text+"It's a Tie!"
+    
+    if user=='rock' and comp=='paper':
+        ComputerWins = ComputerWins + 1
+        return winning_text+"You Lose!"
+    
+    elif user=='paper' and comp=='Scissor':
+        ComputerWins = ComputerWins + 1
+        return winning_text+"You Lose!"
+
+    elif user=='scissor' and comp=='rock':
+        ComputerWins = ComputerWins + 1
+        return winning_text+"You Lose!"
+    
+    else:
+        UserWins = UserWins + 1
+        return winning_text+"You Win!"
+
+def showWinner():
+    global compChoice
+    '''Display the winner between User and Computer'''
+    if user_input.get():
+        userChoice = user_input.get()
+        if userChoice.lower() in CHOICES:
+            winningText = winner(userChoice,compChoice)
+            winner_text.config(text= winningText)
+            user_input.delete(0,END)
+            compChoice = random.choice(CHOICES)
+            Score_text.config(text=f'User-{UserWins} | Computer-{ComputerWins}')
+        else:
+            print(userChoice)
+            messagebox.showwarning('Warning','Invalid Choice')
+
+if __name__ == "__main__":
+    # SETTING THE GUI WINDOW
+    gui = Tk()
+    gui.title('Rock-Paper-Scissor Game')
+    gui.geometry('380x420')
+    gui.config(bg='#DCDCDC')
+
+    # CREATING THE MENU FOR OUR GUI
+    my_menu = Menu(gui)
+    gui.config(menu=my_menu)
+    Label(text='Rock-Paper-Scissor Game',
+        font=('comicsansms',16,'bold'),
+        fg=FGCOLOR,bg=BGCOLOR).pack(pady=3)
+
+    # MENU FOR SHOWING RULES AND ABOUT THE GAME
+    my_menu.add_command(label='Rules',command=showRules)
+    my_menu.add_command(label='About',command=showAbout)
+
+    # GUI TEXT
+    txt = Label(text="Computer has choosed it's Choice",
+                font=FONT,fg=FGCOLOR,bg=BGCOLOR).pack(pady=5)
+
+    # GIVING USER THE CHOICES
+    Label(text='Enter your Choice:',
+        font=('verdana',10,'bold'),
+        fg=FGCOLOR,bg=BGCOLOR).pack(pady=10)
+
+    Label(text='* Rock\n* Paper\n* Scissor',
+        font=('comicsansms',11),
+        fg=FGCOLOR,bg=BGCOLOR).pack(pady=2)
+
+    # INPUT BOX FOR USER
+    user_input = Entry(width=7,
+                    font=FONT)
+    user_input.pack(pady=3)
+
+    # SUBMIT BUTTON TO DISPLAY THE WINNER
+    submit_btn = Button(text='Submit',
+                        command=showWinner,
+                        font=FONT,
+                        fg=FGCOLOR,bg=BGCOLOR)
+    submit_btn.pack(pady=5)
+
+    # THIS TEXT WILL SHOW THE WINNER
+    winner_text = Label(text='\nResult will appear here\n',
+                        font=('Comicsansms',13,'bold'),
+                        fg=FGCOLOR,bg=BGCOLOR)
+    winner_text.pack(pady=15)
+
+    # THIS TEXT WILL DISPLAY THE SCORES OF USER AND C0MPUTER
+    Score_text = Label(text=f'User-{UserWins} | Computer-{ComputerWins}',
+                    font=('verdana',13,'bold'),
+                    fg=FGCOLOR,bg=BGCOLOR)
+    Score_text.pack(pady=8)
+
+    gui.mainloop()
