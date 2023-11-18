@@ -1,0 +1,87 @@
+from tkinter import *
+from tkinter import messagebox
+
+def addTask():
+    new_task = input_task.get()
+    if not new_task:
+        messagebox.showerror('ERROR','Task cannot be empty!')
+    else:
+        task_list.insert(END,new_task)
+        input_task.delete(0,END)
+        messagebox.showinfo('Success',f"Task '{new_task}' Added to List!")
+
+def delTask():
+    idx = task_list.curselection()
+    if idx:
+        task_list.delete(idx)
+        messagebox.showinfo('Success','Task Deleted Successfully!')
+    else:
+        messagebox.showerror('ERROR','Select the Task you want to remove!')
+
+def del_AllTask():
+    task_list.delete(0,END)
+    messagebox.showinfo('Info','All Tasks are Deleted!')
+
+if __name__ == '__main__':
+
+    codsoft = Tk()
+    codsoft.config(bg='#0096DC')
+    codsoft.title('To-Do List GUI')
+    codsoft.geometry('400x520')
+    codsoft.minsize(370,470)
+
+    intro = Label(text='To-Do List Application',
+                  font=('verdana',16,'bold'),
+                  fg='white',
+                  bg='#0096DC')
+    intro.pack()
+
+    enter_task = Label(text='Give Your Task here',
+                       font=('verdana',14),
+                       bg='#0096DC',
+                       fg='White')
+    enter_task.pack(pady=(15,10))
+
+    input_task = Entry(codsoft,
+                       width=35,
+                       font=('verdana',12))
+    input_task.pack(ipady=5,pady=5)
+
+    add_task_btn = Button(codsoft,
+                          text='Add Task',
+                          command=addTask,
+                          font=('verdana',10))
+    add_task_btn.pack()
+
+    listbox_title = Label(text='Your Tasks:',
+                          font=('verdana',12),
+                          fg='White',
+                          bg='#0096DC')
+    listbox_title.pack(pady=(10,10))
+
+    task_list = Listbox(codsoft,
+                        width=35,
+                        height=10,
+                        font=('verdana',12),
+                        fg='black',
+                        bg='white')
+    task_list.pack()
+
+    del_btn = Button(codsoft,
+                     text='Delete Task',
+                     command=delTask,
+                     font=('verdana',10),
+                     fg='black',
+                     bg='white')
+    del_btn.pack(pady=10)
+
+    del_all_btn = Button(codsoft,
+                     text='Delete All Tasks',
+                     command=del_AllTask,
+                     font=('verdana',10),
+                     fg='black',
+                     bg='white')
+    del_all_btn.pack()
+
+    codsoft.mainloop()
+    
