@@ -1,0 +1,96 @@
+class ContactBook:
+    contactBook = []
+        
+    def add_info(self):
+        print('\n******NEW CONTACT******')
+        Name = input('Enter Name: ')
+        Number = input('Enter Number: ')
+        try:
+            Number = int(Number)
+        except Exception:
+            print('**** Number cannot be Letter ****')
+            return
+        Address = input('Enter Address: ')
+        Email = input('Enter Email: ')
+        keys = ['Name', 'Number', 'Address', 'Email']
+        vals = [Name, Number, Address, Email]
+        contact = {key : val for key, val in zip(keys, vals)}
+        self.contactBook.append(contact)
+        print(f"New Contact named '{Name}' added to Book")
+
+    def show_contact(self):
+        if not self.contactBook:
+            print('\nContact Book is Empty\n')
+        else:
+            for i, contact in enumerate(self.contactBook, start=1):
+                print(f'\n******Contact No.{i}******')
+                for data, info in contact.items():
+                    print(f'* {data} : {info}')
+    
+    def search_contact(self):
+        print('\n******SEARCH CONTACT******')
+        sear = input('Enter Name of the contact to search: ')
+        for contact in self.contactBook:
+            if contact['Name'] == sear:
+                print('Contact Found')
+                for data,info in contact.items():
+                    print(f'* {data} : {info}')
+                break
+        else:
+            print(f'No Contact found !')
+
+    def delete_contact(self):
+        print('\n******DELETE CONTACT******')
+        cont = input('Enter Contact Name you want to delete: ')
+        if cont.lower() in (namedata:=[data['Name'].lower() for data in self.contactBook]):
+            self.contactBook.pop(namedata.index(cont))
+            print('Contact Removed Successfully')
+        else:
+            print(f"No Contact Found with Name '{cont}'")
+    
+    def update_contact(self):
+        upd = input('Enter name of Contact you want to update: ')
+        if upd in [data['Name'] for data in self.contactBook]:
+            newName = input('Enter New Name: ')
+            newNumber = int(input('Enter New Number: '))
+            newAddress = input('Enter New Address: ')
+            newEmail = input('Enter New Email: ')
+            for contact in self.contactBook:
+                if upd == contact['Name']:
+                    contact['Name'] = newName
+                    contact['Number'] = newNumber
+                    contact['Address'] = newAddress
+                    contact['Email'] = newEmail
+                    break
+            print('Contact Updated Successfully')
+        else:
+            print(f"No Contact found with Name '{upd}'")
+
+def main():
+    codsoft = ContactBook()
+    print('Welcome to Contact Book Program...')
+    while True:
+        print('\n1. Add New Contact')
+        print('2. View Contact List')
+        print('3. Search a Contact')
+        print('4. Update a Contact')
+        print('5. Remove a Contact')
+        choice = input('6. exit\nEnter Your Choice(1-6): ')
+        if choice=='1':
+            codsoft.add_info()
+        elif choice=='2':
+            codsoft.show_contact()
+        elif choice=='3':
+            codsoft.search_contact()
+        elif choice=='4':
+            codsoft.update_contact()
+        elif choice=='5':
+            codsoft.update_contact()
+        elif choice=='6':
+            print('Thanks, have A nice day!')
+            break
+        else:
+            print('Invalid Choice!')
+        
+if __name__ == '__main__':
+    main()
